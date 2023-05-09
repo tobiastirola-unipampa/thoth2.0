@@ -12,33 +12,24 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    /* O Laravel automaticamente faz uma pluralização, ou seja, 
+    ele pega o nome da model e consegue identificar sozinho e 
+    relacionar a uma tabela do BD, mesmo que o nome não seja o mesmo, então,
+    podemos especificar o nome da tabela aqui na model */
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    /* Especificando nome da tabela */
+    protected $table = 'users';
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
+    /* Atributos onde os campos são "preenchiveis". --> Campos que serão preenchidos pelo Request::all() */
+    protected $fillable = ['name','email','password',];
+
+    /* Os atributos que devem ser ocultados para serialização. */
+    protected $hidden = ['password','remember_token',];
+
+    /* Os atributos que devem ser lançados. */
     protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+        'email_verified_at' => 'datetime',];
+
+    /* Para tirar a opção de created_at updated_at das tabelas */
+    public $timestamps = false;
 }
